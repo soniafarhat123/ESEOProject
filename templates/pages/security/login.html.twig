@@ -1,0 +1,76 @@
+{% extends 'base_login.html.twig' %}
+
+{% block title %}Connexion Admin{% endblock %}
+
+{% block body %}
+
+    {# read and display just one flash message type #}
+    {% for message in app.flashes('success') %}
+        <div class="bs-toast toast toast-placement-ex m-2 fade bg-success top-0 end-0 show" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
+            <div class="toast-header">
+                <i class="fa-solid fa-bell"></i>
+                <div class="me-auto fw-semibold"></div>
+                <small>Maintenant</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">{{ message }}</div>
+        </div>
+    {% endfor %}
+    {# total items count #}
+
+
+        <!-- Logo -->
+        <div class="app-brand justify-content-center">
+
+            <a href="#" class="app-brand-link gap-2">
+                 <img src="{{ asset('assets/img/login_image.png') }}" alt="" srcset="" width="110" height="110">
+            </a>
+        </div>
+        <!-- /Logo -->
+
+
+    <h2 class="mb-2" align="center">CONNEXION</h2>
+    {% if error %}
+        <div class="alert alert-danger" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+        <h4 class="mb-2">Bienvenue! 👋</h4>
+        <p class="mb-1">Veuillez saisir votre email et votre mot de passe.</p>
+
+
+
+        <form class="mb-3" action="{{ path('security.login') }}" method="POST" name="login">
+            <div class="form-group mb-2">
+                <label for="username" class="form-label mt-4">Adresse email</label>
+                <input type="email" class="form-control" id="username" name="_username" placeholder="exemple@gmail.com"
+                value="{{ last_username }}" required autofocus>
+            </div>
+            <div class="form-group">
+                <div class="d-flex justify-content-between">
+                    <label class="form-label" for="password">Mot de passe</label>
+                    <a href="#">
+                        <small>Mot de passe oublié?</small>
+                    </a>
+                </div>
+
+                <input type="password" class="form-control" id="password" name="_password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary d-grid w-100 mb-3 mt-2">
+                Se connecter
+            </button>
+        </form>
+
+
+
+        <p class="text-center">
+            <span>Nouveau sur notre plateforme ?</span>
+            <a href="{{ path('security.registration') }}">
+                <span>Créer un compte</span>
+            </a>
+        </p>
+
+
+
+
+{% endblock %}

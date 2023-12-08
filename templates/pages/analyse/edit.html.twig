@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+{% block title %} Modification {% endblock %}
+
+{% block body %}
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">GCA /</span> {{ image.nomImage }}</h4>
+        <a href="{{ path('analyse.index') }}">
+            <h4 class="text-muted float-end" ><i class="fa-solid fa-arrow-left" style="color: #0d5aa7"></i> Retour </h4>
+        </a>
+
+
+        <!-- Images -->
+        <h5 class="pb-1 mb-4">Détails Images &amp; Modification</h5>
+        <div class="row mb-5">
+            <div class="col-md-6 col-xl-4">
+                <div class="card mb-3">
+                    {% if image.resultat == "Saine" %}
+                    <img class="card-img-top" src="{{ asset('images/Saine/'~image.image~'') }}  " alt="Card image cap">
+                    {% else %}
+                    <img class="card-img-top" src="{{ asset('images/Malade/'~image.image~'') }}  " alt="Card image cap">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ image.nomImage }}</h5>
+                        <p class="card-text">
+                            {% if image.resultat == "Malade" %}
+                        <span class="badge bg-label-warning me-1">Malade</span>
+                            {% else %}
+                            <span class="badge bg-label-success me-1">Saine</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-20 col-xl-8">
+                <div class="card mb-10">
+                    {{ form_start(form) }}
+                    <div class="card-body">
+                        <div>
+                            {{ form_label(form.fiability) }}
+                            {{ form_widget(form.fiability) }}
+                        </div>
+                        <div>
+                            {{ form_label(form.description) }}
+                            {{ form_widget(form.description) }}
+                        </div>
+
+                        <div class="row justify-content-end" align="right">
+                            <div class="col-sm-10 mt-4" >
+                                {{ form_row(form.submit) }}
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+
+        </div>
+        <!--/ Images -->
+
+    </div>
+    <!-- / Content -->
+
+    <div class="content-backdrop fade"></div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base_login.html.twig' %}
+
+{% block title %}Registration Admin{% endblock %}
+
+{%  block body %}
+    <h2 class="mb-2" align="center">INSCRIPTION</h2>
+
+    {{ form(form) }}
+
+    <p class="text-center mt-2">
+        <span>Vous avez déjà un compte?</span>
+        <a href="{{ path('security.login') }}">
+            <span>Se Connecter</span>
+        </a>
+    </p>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/ui-toasts.js') }}"></script>
+{% endblock %}

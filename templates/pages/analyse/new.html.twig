@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+{% block title %} Ajout Image {% endblock %}
+
+{% block body %}
+
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">GCA/</span> Formulaire d'ajout</h4>
+
+            <!-- Basic Layout & Basic with Icons -->
+            <div class="row">
+                <!-- Basic Layout -->
+                <div class="col-xxl">
+                    <div class="card mb-4">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <h3 class="mb-0" style="color: #0d5aa7">Ajouter une nouvelle image</h3>
+                            <a href="{{ path('analyse.index') }}">
+                                <h4 class="text-muted float-end" ><i class="fa-solid fa-arrow-left" style="color: #0d5aa7"></i> Retour </h4>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            {{ form_start(form) }}
+                                <div class="row mb-3">
+                                    {{ form_label(form.image) }}
+                                    <div class="col-sm-10">
+                                        {{ form_widget(form.image) }}
+                                        {% if form_errors(form.image) %}
+                                            <div class="alert alert-danger alert-dismissible">
+                                                {{ form_errors(form.image) }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    {{ form_label(form.nomImage) }}
+                                    <div class="col-sm-10">
+                                        {{ form_widget(form.nomImage) }}
+                                        {% if form_errors(form.nomImage) %}
+                                            <div class="alert alert-danger alert-dismissible">
+                                                {{ form_errors(form.nomImage) }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    {{ form_label(form.fiability) }}
+                                    <div class="col-sm-10">
+                                        {{ form_widget(form.fiability) }}
+                                        {% if form_errors(form.fiability) %}
+                                            <div class="alert alert-danger alert-dismissible">
+                                                {{ form_errors(form.fiability) }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    {{ form_label(form.resultat) }}
+                                    <div class="col-sm-10">
+                                        {{ form_widget(form.resultat) }}
+                                        {% if form_errors(form.resultat) %}
+                                            <div class="alert alert-danger alert-dismissible">
+                                                {{ form_errors(form.resultat) }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    {{ form_label(form.description) }}
+                                    <div class="col-sm-10">
+                                    {{ form_widget(form.description) }}
+                                    {% if form_errors(form.description) %}
+                                        <div class="alert alert-danger alert-dismissible">
+                                            {{ form_errors(form.description) }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="row justify-content-end" align="right">
+                                    <div class="col-sm-10 mt-4" >
+                                        {{ form_row(form.submit) }}
+                                    </div>
+                                </div>
+                            {{ form_rest(form) }}
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / Content -->
+
+        <div class="content-backdrop fade"></div>
+    </div>
+    </div>
+    <!-- Content wrapper -->
+
+{% endblock %}

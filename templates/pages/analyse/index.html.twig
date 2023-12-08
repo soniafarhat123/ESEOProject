@@ -1,0 +1,170 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Images{% endblock %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+        <!-- Content -->
+
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="row gy-3">
+                <div class="col-md-9">
+                    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">GCA /</span> Liste des images </h4>
+                </div>
+                <div class="col-md-3">
+                    <a href="{{ path('image.new') }}"  class="btn btn-info col-md-11 " > <i class="fa-solid fa-plus"></i> Ajouter une Image </a>
+                </div>
+            </div>
+
+
+            {# read and display just one flash message type #}
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            {# total items count #}
+
+            {% if image is not empty %}
+            <!-- Basic Bootstrap Table -->
+            <div class="card">
+
+                <div class="row gy-3">
+                    <div class="col-md-7">
+                        <h5 class="card-header">Il y a {{ image.getTotalItemCount }} images au total</h5>
+                    </div>
+                    <div class="col-md-5">
+                        <form class="d-flex">
+                            <div class="input-group mt-3">
+                                <input type="text" aria-label="recherche par nom" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Par nom image...">
+                                <input type="text" aria-label="recherche par date" class="form-control" id="myInput2" onkeyup="myFunction2()" placeholder="Par date d'ajout...">
+                                <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+
+                <div class="table-responsive text-nowrap">
+                    <table class="table table-hover" id="affichage_Info">
+                        <thead>
+                        <tr class="table-active">
+                            <th></th>
+                            <th>Nom Image</th>
+                            <th>Résultat</th>
+                            <th>Fiabilité</th>
+                            <th>Date d'ajout</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            {% for item in image %}
+                                <tr>
+                                    <td><a href="{{ path('image.edit', {id : item.id}) }}"><i class="fa-solid fa-eye" style="color: #0d5aa7" ></i></a>
+                                    </td>
+                                    <td>{{ item.nomImage }}</td>
+                                    {% if item.resultat == "Malade" %}
+                                    <td><span class="badge bg-label-warning me-1">Malade</span></td>
+                                    {% else %}
+                                    <td><span class="badge bg-label-success me-1">Saine</span></td>
+                                    {% endif %}
+                                    <td>{{ item.fiability }} %</td>
+                                    <td>{{ item.createdAt | date("d/m/Y") }}</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="{{ path('image.edit', {id : item.id}) }}"
+                                                ><i class="bx bx-edit-alt me-1" style="color: #0d5aa7"></i> Modifier </a>
+                                                <a class="dropdown-item" href="{{ path('image.delete', {id : item.id}) }}" onclick="return confirm('Êtes-vous sûr?')"
+                                                ><i class="bx bx-trash me-1" style="color: red"></i> Supprimer</a
+                                                >
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                        </tbody>
+                        <tfoot class="table-border-bottom-0">
+                        <tr class="table-active">
+                            <th></th>
+                            <th>Nom Image</th>
+                            <th>Résultat</th>
+                            <th>Fiabilité</th>
+                            <th>Date d'ajout</th>
+                            <th>Actions</th>
+                        </tr>
+                        </tfoot>
+                        <a href="{{ path('image.excel') }}" class="btn btn-outline-primary d-flex justify-content-center mb-2"><i class="fa-solid fa-file-export"></i>Excel</a>
+                    </table>
+
+                    {# display navigation #}
+                    <div class="navigation d-flex justify-content-center mt-4">
+                        {{ knp_pagination_render(image) }}
+                    </div>
+
+                </div>
+            </div>
+            <!--/ Basic Bootstrap Table -->
+            {% else%}
+            <div class="card">
+                <h5 class="card-header">Il n'y pas d'images.</h5>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/ui-toasts.js') }}"></script>
+
+    <script>
+        function myFunction() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("affichage_Info");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                td2= tr[i].getElementsByTagName("td")[4];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        function myFunction2() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput2");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("affichage_Info");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td= tr[i].getElementsByTagName("td")[4];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+{% endblock %}
